@@ -8,7 +8,7 @@ namespace AdventOfCode
         {
             Console.WriteLine("Hello World!");
 
-            _2020.Day3.Run();
+            _2020.Day4.Run();
 
             Console.ReadLine();
         }
