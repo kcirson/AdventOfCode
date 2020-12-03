@@ -8,7 +8,7 @@ namespace AdventOfCode._2020
 {
     public static class Day2
     {
-        public static List<Rules> Input =>
+        private static List<Rules> Input =>
             InputHelper.GetInput(2020, 2).Select(s => new Rules(s)).ToList();
         public static void Run()
         {
@@ -19,10 +19,10 @@ namespace AdventOfCode._2020
             Console.WriteLine(Part2());
         }
 
-        public static int Part1() =>
+        private static int Part1() =>
             Input.Count(rule => rule.IsValidPasswordPart1);
 
-        public static int Part2() =>
+        private static int Part2() =>
             Input.Count(rule => rule.IsValidPasswordPart2);
 
     }

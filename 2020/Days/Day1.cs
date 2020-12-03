@@ -7,7 +7,7 @@ namespace AdventOfCode._2020
 {
     public static class Day1
     {
-        public static List<int> Input =>
+        private static List<int> Input =>
             InputHelper.GetInput(2020, 1).Select(int.Parse).ToList();
 
         public static void Run()
@@ -19,7 +19,7 @@ namespace AdventOfCode._2020
             Console.WriteLine(Part2());
         }
 
-        public static int Part1()
+        private static int Part1()
         {
             int number1 = -1;
             int number2 = -1;
@@ -39,7 +39,7 @@ namespace AdventOfCode._2020
             return number1 * number2;
         }
 
-        public static int Part2()
+        private static int Part2()
         {
             int number1 = 0;
             int number2 = 0;

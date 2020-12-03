@@ -7,7 +7,7 @@ namespace AdventOfCode._2020
 {
     class Day4
     {
-        public static List<string> Input =>
+        private static List<string> Input =>
                 InputHelper.GetInput(2020, 4).ToList();
 
         public static void Run()
@@ -19,11 +19,11 @@ namespace AdventOfCode._2020
             Console.WriteLine(Part2());
         }
 
-        public static int Part1()
+        private static int Part1()
         {
             return 0;
         }
-        public static int Part2()
+        private static int Part2()
         {
             return 0;
         }

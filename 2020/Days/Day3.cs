@@ -8,7 +8,7 @@ namespace AdventOfCode._2020
 {
     public static class Day3
     {
-        public static List<char[]> Input =>
+        private static List<char[]> Input =>
                 InputHelper.GetInput(2020, 3).Select(s => s.ToCharArray()).ToList();
 
         public static void Run()
@@ -20,12 +20,12 @@ namespace AdventOfCode._2020
             Console.WriteLine(Part2());
         }
 
-        public static int Part1()
+        private static int Part1()
         {
             return CheckTrees(3, 1);
         }
 
-        public static long Part2()
+        private static long Part2()
         {
             List<Tuple<int, int>> Slopes = new List<Tuple<int, int>>
             {
