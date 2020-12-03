@@ -22,10 +22,7 @@ namespace AdventOfCode._2019
 
         private static int Part1()
         {
-            IntProgram program = new IntProgram(Input);
-            program.Change(1, 12);
-            program.Change(2, 2);
-
+            IntProgram program = new IntProgram(Input, 12 ,2);
             program.Run();
 
             return program.GetResult();
@@ -33,7 +30,31 @@ namespace AdventOfCode._2019
 
         private static int Part2()
         {
-            return 0;
+            IntProgram program;
+            int count = Input.Count;
+            int target = 19690720;
+            int noun = 0, verb = 0;
+
+            for(int i = 0; i < count; i++)
+            {
+                for(int j = 0; j < count; j++)
+                {
+                    program = new IntProgram(Input, i, j);
+                    program.Run();
+
+                    if (program.GetResult() == target)
+                    {
+                        noun = i;
+                        verb = j;
+                        break;
+                    }
+                }
+
+                if (noun != 0 && verb != 0)
+                    break;
+            }
+
+            return 100 * noun + verb;
         }
 
         public class IntProgram
@@ -41,10 +62,13 @@ namespace AdventOfCode._2019
             List<int> Data = new List<int>();
             int Count;
 
-            public IntProgram(List<int> input)
+            public IntProgram(List<int> input, int noun, int verb)
             {
                 Data = input;
-                Count = Data.Count();
+                Count = Data.Count;
+
+                Data[1] = noun;
+                Data[2] = verb;
             }
 
             public void Run()
@@ -74,11 +98,6 @@ namespace AdventOfCode._2019
                     if (stop)
                         break;
                 }
-            }
-
-            public void Change(int position, int value)
-            {
-                Data[position] = value;
             }
 
             public int GetResult() => Data[0];
