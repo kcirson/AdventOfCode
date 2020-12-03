@@ -36,16 +36,11 @@ namespace AdventOfCode._2020
                 new Tuple<int, int>(1, 2)
             };
 
-            long treeCount = 0;
+            long treeCount = 1;
 
             Parallel.ForEach(Slopes, slope =>
             {
-                int trees = CheckTrees(slope.Item1, slope.Item2);
-
-                if (treeCount == 0)
-                    treeCount = trees;
-                else
-                    treeCount *= trees;
+                treeCount *= CheckTrees(slope.Item1, slope.Item2);
             });
 
             return treeCount;
