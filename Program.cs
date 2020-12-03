@@ -1,4 +1,5 @@
-﻿using AdventOfCode._2020;
+﻿using AdventOfCode._2019;
+using AdventOfCode._2020;
 using System;
 
 namespace AdventOfCode
@@ -15,6 +16,7 @@ namespace AdventOfCode
             switch (year)
             {
                 case 2019:
+                    new Year2019(day);
                     break;
                 case 2020:
                     new Year2020(day);
@@ -32,7 +34,7 @@ namespace AdventOfCode
 
                 string input = Console.ReadLine();
 
-                if (int.TryParse(input, out int year) && Array.IndexOf(Constants.AvailableYears, year) > 0)
+                if (int.TryParse(input, out int year) && Array.IndexOf(Constants.AvailableYears, year) != -1)
                 {
                     return year;
                 }
