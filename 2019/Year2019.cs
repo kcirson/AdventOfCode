@@ -15,6 +15,9 @@ namespace AdventOfCode._2019
                 case 1:
                     Day1.Run();
                     break;
+                case 2:
+                    Day2.Run();
+                    break;
             }
         }
     }
