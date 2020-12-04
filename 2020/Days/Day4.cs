@@ -65,15 +65,15 @@ namespace AdventOfCode._2020
             string HairColor { get; set; } // hcl
             string EyeColor { get; set; } //ecl
             string PassportID { get; set; } //pid
-            string CountryID { get; set; } //cid
+            private string CountryID { get; set; } //cid
 
             public bool IsValid
             {
                 get
                 {
-                    string[] test = new string[] { BirthYear, IssueYear, ExpirationYear, Height, HairColor, EyeColor, PassportID };
+                    string[] required = new string[] { BirthYear, IssueYear, ExpirationYear, Height, HairColor, EyeColor, PassportID };
 
-                    return Array.IndexOf(test, string.Empty) == -1 && Array.IndexOf(test, null) == -1;
+                    return Array.IndexOf(required, string.Empty) == -1 && Array.IndexOf(required, null) == -1;
                 }
             }
 
@@ -148,7 +148,7 @@ namespace AdventOfCode._2020
                 }
             }
 
-            public bool CheckNumbers(string value, int min, int max)
+            private bool CheckNumbers(string value, int min, int max)
             {
                 if (int.TryParse(value, out int number))
                 {
@@ -158,7 +158,7 @@ namespace AdventOfCode._2020
                     return false;
             }
 
-            public bool CheckHeight(string value)
+            private bool CheckHeight(string value)
             {
                 if (value.IndexOf("cm") > -1 || value.IndexOf("in") > -1)
                 {
@@ -179,14 +179,14 @@ namespace AdventOfCode._2020
                 return false;
             }
 
-            public bool CheckEyeColor(string value)
+            private bool CheckEyeColor(string value)
             {
                 string[] validColors = new string[] { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" };
 
                 return Array.IndexOf(validColors, value) != -1;
             }
 
-            public bool CheckHairColor(string value)
+            private bool CheckHairColor(string value)
             {
                 if (value.StartsWith('#'))
                 {
