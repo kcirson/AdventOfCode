@@ -188,7 +188,7 @@ namespace AdventOfCode._2020
 
             private bool CheckHairColor(string value)
             {
-                return Regex.Match(value, "^([#])([0-9a-f]{6})").Success;
+                return Regex.Match(value, "^[#][0-9a-f]{6}$").Success;
             }
 
             private bool CheckPassportID(string passportID)
