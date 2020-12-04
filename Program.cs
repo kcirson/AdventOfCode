@@ -9,19 +9,12 @@ namespace AdventOfCode
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Welcome to the Advent of Code Program!");
-            
-            int year = ReadYear("Choose which year you want and we will check if we have solutions for this year (Press enter for current year)");
-            int day = ReadDay("Now please choose a day (1-25) to pick a solution for this year");
 
-            switch (year)
-            {
-                case 2019:
-                    new Year2019(day);
-                    break;
-                case 2020:
-                    new Year2020(day);
-                    break;
-            }
+            int year = ReadYear("Choose which year you want and we will check if we have solutions for this year (Press enter for current year)");
+
+            StartDayFromYear(year, "Now please choose a day (1-25) to pick a solution for this year");
+
+
 
             Console.ReadLine();
         }
@@ -49,20 +42,32 @@ namespace AdventOfCode
             }
         }
 
-        private static int ReadDay(string prompt)
+        private static void StartDayFromYear(int year, string prompt)
         {
-            while (true)
+            bool stop = false;
+
+            while (!stop)
             {
                 Console.WriteLine(prompt);
 
                 if (int.TryParse(Console.ReadLine(), out int day) && day > 0 && day <= 25)
-                {
-                    return day;
-                }
-                else
-                {
+                    stop = StartSolution(year, day);
+
+                if (stop == false)
                     Console.WriteLine("We have no solution for this day or you didnt enter a correct number");
-                }
+            }
+        }
+
+        private static bool StartSolution(int year, int day)
+        {
+            switch (year)
+            {
+                case 2019:
+                    return Year2019.StartDay(day);
+                case 2020:
+                    return Year2020.StartDay(day);
+                default:
+                    return false;
             }
         }
     }

@@ -6,28 +6,27 @@ namespace AdventOfCode._2020
 {
     public class Year2020
     {
-        public Year2020(int day)
+        public static bool StartDay(int day)
         {
             switch (day)
             {
                 case 1:
                     Day1.Run();
-                    break;
+                    return true;
                 case 2:
                     Day2.Run();
-                    break;
+                    return true;
                 case 3:
                     Day3.Run();
-                    break;
+                    return true;
                 case 4:
                     Day4.Run();
-                    break;
+                    return true;
                 case 5:
                     Day5.Run();
-                    break;
+                    return true;
                 default:
-                    Console.WriteLine("Day not found");
-                    break;
+                    return false;
             }
         }
     }
