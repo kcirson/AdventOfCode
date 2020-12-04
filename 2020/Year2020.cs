@@ -22,6 +22,12 @@ namespace AdventOfCode._2020
                 case 4:
                     Day4.Run();
                     break;
+                case 5:
+                    Day5.Run();
+                    break;
+                default:
+                    Console.WriteLine("Day not found");
+                    break;
             }
         }
     }
