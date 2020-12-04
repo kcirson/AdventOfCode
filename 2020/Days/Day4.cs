@@ -64,7 +64,7 @@ namespace AdventOfCode._2020
             string Height { get; set; } //hgt
             string HairColor { get; set; } // hcl
             string EyeColor { get; set; } //ecl
-            string PassportID { get; set; } //pid
+            public string PassportID { get; set; } //pid
             private string CountryID { get; set; } //cid
 
             public bool IsValid
@@ -188,27 +188,12 @@ namespace AdventOfCode._2020
 
             private bool CheckHairColor(string value)
             {
-                if (value.StartsWith('#'))
-                {
-                    if (value.Length == 7)
-                    {
-                        var match = Regex.Match(value, "[0-9a-f]");
-                        return match.Success;
-                    }
-                }
-
-                return false;
+                return Regex.Match(value, "^([#])([0-9a-f]{6})").Success;
             }
 
             private bool CheckPassportID(string passportID)
             {
-                if (int.TryParse(passportID, out int id))
-                {
-                    if (passportID.Length == 9)
-                        return true;
-                }
-
-                return false;
+                return Regex.Match(passportID, "^[0-9]{9}$").Success;
             }
         }
     }
