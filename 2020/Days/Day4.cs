@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode._2020
 {
@@ -27,7 +28,9 @@ namespace AdventOfCode._2020
         }
         private static int Part2()
         {
-            return 0;
+            List<Passport> passports = GetPassports(Input);
+
+            return passports.Count(p => p.IsValid2);
         }
 
         private static List<Passport> GetPassports(List<string> data)
@@ -68,9 +71,42 @@ namespace AdventOfCode._2020
             {
                 get
                 {
-                    string[] required = new string[] { BirthYear, IssueYear, ExpirationYear, Height, HairColor, EyeColor, PassportID };
-                    
-                    return Array.IndexOf(required, string.Empty) == -1 && Array.IndexOf(required, null) == -1;
+                    string[] test = new string[] { BirthYear, IssueYear, ExpirationYear, Height, HairColor, EyeColor, PassportID };
+
+                    return Array.IndexOf(test, string.Empty) == -1 && Array.IndexOf(test, null) == -1;
+                }
+            }
+
+            public bool IsValid2
+            {
+                get
+                {
+                    if (!IsValid)
+                        return false;
+
+                    if (!CheckNumbers(BirthYear, 1920, 2002))
+                        return false;
+
+                    if (!CheckNumbers(IssueYear, 2010, 2020))
+                        return false;
+
+                    if (!CheckNumbers(ExpirationYear, 2020, 2030))
+                        return false;
+
+                    if (!CheckHeight(Height))
+                        return false;
+
+                    if (!CheckEyeColor(EyeColor))
+                        return false;
+
+                    if (!CheckHairColor(HairColor))
+                        return false;
+
+                    if (!CheckPassportID(PassportID))
+                        return false;
+
+                    return true;
+
                 }
             }
 
@@ -110,6 +146,69 @@ namespace AdventOfCode._2020
                         CountryID = split[1];
                         break;
                 }
+            }
+
+            public bool CheckNumbers(string value, int min, int max)
+            {
+                if (int.TryParse(value, out int number))
+                {
+                    return number >= min && number <= max;
+                }
+                else
+                    return false;
+            }
+
+            public bool CheckHeight(string value)
+            {
+                if (value.IndexOf("cm") > -1 || value.IndexOf("in") > -1)
+                {
+                    string heightType = value.Substring(value.Length - 2, 2);
+                    string height = value.Replace("cm", "").Replace("in", "");
+
+                    if (int.TryParse(height, out int intHeight))
+                    {
+                        switch (heightType)
+                        {
+                            case "cm":
+                                return intHeight >= 150 && intHeight <= 193;
+                            case "in":
+                                return intHeight >= 59 && intHeight <= 76;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            public bool CheckEyeColor(string value)
+            {
+                string[] validColors = new string[] { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" };
+
+                return Array.IndexOf(validColors, value) != -1;
+            }
+
+            public bool CheckHairColor(string value)
+            {
+                if (value.StartsWith('#'))
+                {
+                    if (value.Length == 7)
+                    {
+                        var match = Regex.Match(value, "[0-9a-f]");
+                        return match.Success;
+                    }
+                }
+
+                return false;
+            }
+
+            private bool CheckPassportID(string passportID)
+            {
+                if (int.TryParse(passportID, out int id))
+                {
+                    if (passportID.Length == 9)
+                        return true;
+                }
+
+                return false;
             }
         }
     }
