@@ -34,7 +34,7 @@ namespace AdventOfCode._2020
             Plane plane = new Plane(128, 8);
             List<int> seatIds = Input.Select(s => plane.CheckSeat(s)).ToList();
 
-            return Enumerable.Range(0, maxSeat).Except(seatIds).Max();
+            return Enumerable.Range(0, seatIds.Max()).Except(seatIds).Max();
         }
 
         private class Plane
