@@ -25,8 +25,6 @@ namespace AdventOfCode._2020
             List<Group> answerGroups = new List<Group>();
             Group current = new Group();
 
-            int count = 0;
-
             foreach (string answer in Input)
             {
                 if (!string.IsNullOrEmpty(answer))
@@ -36,7 +34,6 @@ namespace AdventOfCode._2020
                 else
                 {
                     answerGroups.Add(current);
-                    count += current.GetAnswerCount();
                     current = new Group();
                 }
             }
@@ -48,12 +45,32 @@ namespace AdventOfCode._2020
 
         private static int Part2()
         {
-            return 0;
+            List<Group> answerGroups = new List<Group>();
+            Group current = new Group();
+
+            foreach (string answer in Input)
+            {
+                if (!string.IsNullOrEmpty(answer))
+                {
+                    current.AddAnswer2(answer);
+                }
+                else
+                {
+                    answerGroups.Add(current);
+                    current = new Group();
+                }
+            }
+
+            answerGroups.Add(current);
+
+            return answerGroups.Sum(g => g.GetAnswerCount2());
         }
 
         private class Group
         {
             List<char> AnsweredQuestions = new List<char>();
+            Dictionary<char, int> Answers = new Dictionary<char, int>();
+            int GroupSize { get; set; } = 0;
 
             public Group()
             {
@@ -69,9 +86,32 @@ namespace AdventOfCode._2020
                 }
             }
 
+            public void AddAnswer2(string answer)
+            {
+                GroupSize++;
+
+                foreach (char c in answer)
+                {
+                    if (!Answers.ContainsKey(c))
+                    {
+                        Answers.Add(c, 1);
+                    }
+                    else
+                    {
+                        Answers[c] = Answers[c] + 1;
+                    }
+                }
+            }
+
+
             public int GetAnswerCount()
             {
                 return AnsweredQuestions.Count;
+            }
+
+            public int GetAnswerCount2()
+            {
+                return Answers.Where(pair => pair.Value == GroupSize).Count();
             }
         }
     }
