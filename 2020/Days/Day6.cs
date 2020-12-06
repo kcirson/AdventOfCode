@@ -9,7 +9,7 @@ namespace AdventOfCode._2020
     public static class Day6
     {
         private static List<string> Input =>
-               InputHelper.GetInput(2020, 5);
+        InputHelper.GetInputString(2020, 6).Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
 
         public static void Run()
         {
@@ -22,12 +22,57 @@ namespace AdventOfCode._2020
 
         private static int Part1()
         {
-            return 0;
+            List<Group> answerGroups = new List<Group>();
+            Group current = new Group();
+
+            int count = 0;
+
+            foreach (string answer in Input)
+            {
+                if (!string.IsNullOrEmpty(answer))
+                {
+                    current.AddAnswer(answer);
+                }
+                else
+                {
+                    answerGroups.Add(current);
+                    count += current.GetAnswerCount();
+                    current = new Group();
+                }
+            }
+
+            answerGroups.Add(current);
+
+            return answerGroups.Sum(g => g.GetAnswerCount());
         }
 
         private static int Part2()
         {
             return 0;
+        }
+
+        private class Group
+        {
+            List<char> AnsweredQuestions = new List<char>();
+
+            public Group()
+            {
+
+            }
+
+            public void AddAnswer(string answer)
+            {
+                foreach (char c in answer)
+                {
+                    if (!AnsweredQuestions.Contains(c))
+                        AnsweredQuestions.Add(c);
+                }
+            }
+
+            public int GetAnswerCount()
+            {
+                return AnsweredQuestions.Count;
+            }
         }
     }
 }
