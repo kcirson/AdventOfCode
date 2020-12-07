@@ -31,6 +31,9 @@ namespace AdventOfCode._2020
                 case 7:
                     Day7.Run();
                     return true;
+                case 8:
+                    Day8.Run();
+                    return true;
                 default:
                     return false;
             }
