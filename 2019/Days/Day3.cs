@@ -56,16 +56,34 @@ namespace AdventOfCode._2019
 
         private static int Part2()
         {
-            return 0;
+            Dimension dim = new Dimension(Input);
+
+            int smallestSteps = 0;
+
+            var crossedPoints = dim.FindStepsToCrossedPoint();
+
+            foreach(var pair in crossedPoints)
+            {
+                if(pair.Key.StepsToThisPoint > 0)
+                {
+                    int steps = pair.Key.StepsToThisPoint + pair.Value.StepsToThisPoint;
+
+                    if (smallestSteps == 0)
+                        smallestSteps = steps;
+
+                    if(steps < smallestSteps)
+                        smallestSteps = steps;
+                }
+            }
+
+            return smallestSteps;
         }
 
         private class Dimension
         {
             public List<Point> Line1 = new List<Point>();
             public List<Point> Line2 = new List<Point>();
-
-            List<Point> Points = new List<Point>();
-
+            
             public Dimension(List<string> lines)
             {
                 MarkLines(lines[0], 1);
@@ -74,7 +92,8 @@ namespace AdventOfCode._2019
 
             public void MarkLines(string line, int type)
             {
-                Point lastPoint = new Point(0, 0, type);
+                Point lastPoint = new Point(0, 0, 0, type);
+                int stepCount = 1;
                 AddPoint(lastPoint);
 
                 string[] path = line.Split(',');
@@ -90,39 +109,38 @@ namespace AdventOfCode._2019
                             case 'U':
                                 for (int i = 1; i <= steps; i++)
                                 {
-                                    lastPoint = new Point(lastPoint.GetX(), lastPoint.GetY() + 1, type);
+                                    lastPoint = new Point(lastPoint.GetX(), lastPoint.GetY() + 1, stepCount, type);
                                     AddPoint(lastPoint);
+                                    stepCount++;
                                 }
                                 break;
                             case 'D':
                                 for (int i = 1; i <= steps; i++)
                                 {
-                                    lastPoint = new Point(lastPoint.GetX(), lastPoint.GetY() - 1, type);
+                                    lastPoint = new Point(lastPoint.GetX(), lastPoint.GetY() - 1, stepCount, type);
                                     AddPoint(lastPoint);
+                                    stepCount++;
                                 }
                                 break;
                             case 'L':
                                 for (int i = 1; i <= steps; i++)
                                 {
-                                    lastPoint = new Point(lastPoint.GetX() - 1, lastPoint.GetY(), type);
+                                    lastPoint = new Point(lastPoint.GetX() - 1, lastPoint.GetY(), stepCount, type);
                                     AddPoint(lastPoint);
+                                    stepCount++;
                                 }
                                 break;
                             case 'R':
                                 for (int i = 1; i <= steps; i++)
                                 {
-                                    lastPoint = new Point(lastPoint.GetX() + 1, lastPoint.GetY(), type);
+                                    lastPoint = new Point(lastPoint.GetX() + 1, lastPoint.GetY(), stepCount, type);
                                     AddPoint(lastPoint);
+                                    stepCount++;
                                 }
                                 break;
                         }
                     }
                 }
-            }
-
-            public void AddPoint(int x, int y, int type)
-            {
-                AddPoint(new Point(x, y, type));
             }
 
             public void AddPoint(Point point)
@@ -131,27 +149,45 @@ namespace AdventOfCode._2019
                     Line1.Add(point);
                 else if (point.Type == 2)
                     Line2.Add(point);
-
-                Points.Add(point);
             }
 
             public List<Point> FindCrossedPoints()
             {
                 return Line1.Intersect(Line2).ToList();
             }
+
+            public Dictionary<Point, Point> FindStepsToCrossedPoint()
+            {
+                Dictionary<Point, Point> result = new Dictionary<Point, Point>();
+
+                var list1 = Line1.Intersect(Line2).ToList();
+                var list2 = Line2.Intersect(Line1).ToList();
+
+                foreach(var point in list1)
+                {
+                    if(list2.Find(p => p.X == point.X && p.Y == point.Y) is Point found)
+                    {
+                        result.Add(point, found);
+                    }
+                }
+
+                return result;
+            }
+                 
         }
 
         private class Point : IEquatable<Point>
         {
             public int X { get; set; }
             public int Y { get; set; }
-
+            public int StepsToThisPoint { get; set; }
             public int Type { get; set; }
 
-            public Point(int x, int y, int type)
+            public Point(int x, int y, int steps, int type)
             {
                 X = x;
                 Y = y;
+                StepsToThisPoint = steps;
                 Type = type;
             }
 
