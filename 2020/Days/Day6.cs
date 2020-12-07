@@ -40,7 +40,7 @@ namespace AdventOfCode._2020
 
             answerGroups.Add(current);
 
-            return answerGroups.Sum(g => g.GetAnswerCount());
+            return answerGroups.Sum(g => g.GetAnyAnswerCount());
         }
 
         private static int Part2()
@@ -52,7 +52,7 @@ namespace AdventOfCode._2020
             {
                 if (!string.IsNullOrEmpty(answer))
                 {
-                    current.AddAnswer2(answer);
+                    current.AddAnswer(answer);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace AdventOfCode._2020
 
             answerGroups.Add(current);
 
-            return answerGroups.Sum(g => g.GetAnswerCount2());
+            return answerGroups.Sum(g => g.GetEveryoneSameAnswerCount());
         }
 
         private class Group
@@ -78,15 +78,6 @@ namespace AdventOfCode._2020
             }
 
             public void AddAnswer(string answer)
-            {
-                foreach (char c in answer)
-                {
-                    if (!AnsweredQuestions.Contains(c))
-                        AnsweredQuestions.Add(c);
-                }
-            }
-
-            public void AddAnswer2(string answer)
             {
                 GroupSize++;
 
@@ -103,13 +94,12 @@ namespace AdventOfCode._2020
                 }
             }
 
-
-            public int GetAnswerCount()
+            public int GetAnyAnswerCount()
             {
-                return AnsweredQuestions.Count;
+                return Answers.Keys.Count;
             }
 
-            public int GetAnswerCount2()
+            public int GetEveryoneSameAnswerCount()
             {
                 return Answers.Where(pair => pair.Value == GroupSize).Count();
             }
