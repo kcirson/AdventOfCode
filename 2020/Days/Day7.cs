@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -143,17 +144,18 @@ namespace AdventOfCode._2020
 
             List<Bag> foundBags = new List<Bag>();
 
-            Queue<Bag> queue = new Queue<Bag>(containsColor);
+            ConcurrentQueue<Bag> queue = new ConcurrentQueue<Bag>(containsColor);
 
             while (queue.Count > 0)
             {
-                var bag = queue.Dequeue();
-                foundBags.Add(bag);
+                if (queue.TryDequeue(out Bag bag))
+                {
+                    foundBags.Add(bag);
 
-                var moreBags = bags.Where(b => b.HasBag(bag.Color));
+                    var moreBags = bags.Where(b => b.HasBag(bag.Color));
 
-                foreach (var anotherBag in moreBags)
-                    queue.Enqueue(anotherBag);
+                    Parallel.ForEach(moreBags, anotherBag => { queue.Enqueue(anotherBag); });
+                }
             }
 
             return foundBags;
@@ -164,23 +166,20 @@ namespace AdventOfCode._2020
             List<Bag> containsColor = bags.Where(b => b.Color == color).ToList();
             List<Bag> foundBags = new List<Bag>();
 
-            Queue<Bag> queue = new Queue<Bag>(containsColor.SelectMany(b => b.ContainsBags));
+            ConcurrentQueue<Bag> queue = new ConcurrentQueue<Bag>(containsColor.SelectMany(b => b.ContainsBags));
 
-            while (queue.Count > 0)
+            while (!queue.IsEmpty)
             {
-                var bag = queue.Dequeue();
-
-                if (bag != null)
+                if (queue.TryDequeue(out Bag bag))
                 {
                     foundBags.Add(bag);
 
                     var moreBags = bags.Where(b => b.Color == bag.Color);
 
-                    foreach (var anotherBag in moreBags)
+                    Parallel.ForEach(moreBags, anotherBag =>
                     {
-                        foreach (var subBag in anotherBag.ContainsBags)
-                            queue.Enqueue(subBag);
-                    }
+                        Parallel.ForEach(anotherBag.ContainsBags, subBag => { queue.Enqueue(subBag); });
+                    });
                 }
             }
 
