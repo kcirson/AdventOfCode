@@ -63,7 +63,43 @@ namespace AdventOfCode._2020
 
         private static int Part2()
         {
-            return 0;
+            List<Bag> bags = new List<Bag>();
+
+            foreach (string s in Input)
+            {
+                string[] split = s.Split(new string[] { "bags contain", ",", "." }, StringSplitOptions.RemoveEmptyEntries);
+                int count = split.Length;
+                Bag bag = new Bag(split[0]);
+                List<Bag> subBags = new List<Bag>();
+
+                for (int i = 1; i < count; i++)
+                {
+                    string[] subBagSplit = split[i].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                    if (int.TryParse(subBagSplit[0], out int amount))
+                    {
+                        for (int j = 0; j < amount; j++)
+                            subBags.Add(new Bag(string.Join(' ', subBagSplit[1..])));
+                    }
+
+                }
+
+                bag.AddBags(subBags);
+
+                if (bags.FirstOrDefault(b => b.Color == split[0]) is Bag foundBag)
+                {
+                    foundBag.AddBags(subBags);
+                }
+                else
+                {
+                    bags.Add(bag);
+                }
+
+            }
+
+            List<Bag> ShinyBagContains = FindBagsThatAreInAColoredBag(bags, "shiny gold");
+
+            return ShinyBagContains.Count;
         }
 
         public class Bag : IEquatable<Bag>
@@ -118,6 +154,34 @@ namespace AdventOfCode._2020
 
                 foreach (var anotherBag in moreBags)
                     queue.Enqueue(anotherBag);
+            }
+
+            return foundBags;
+        }
+
+        private static List<Bag> FindBagsThatAreInAColoredBag(List<Bag> bags, string color)
+        {
+            List<Bag> containsColor = bags.Where(b => b.Color == color).ToList();
+            List<Bag> foundBags = new List<Bag>();
+
+            Queue<Bag> queue = new Queue<Bag>(containsColor.SelectMany(b => b.ContainsBags));
+
+            while (queue.Count > 0)
+            {
+                var bag = queue.Dequeue();
+
+                if (bag != null)
+                {
+                    foundBags.Add(bag);
+
+                    var moreBags = bags.Where(b => b.Color == bag.Color);
+
+                    foreach (var anotherBag in moreBags)
+                    {
+                        foreach (var subBag in anotherBag.ContainsBags)
+                            queue.Enqueue(subBag);
+                    }
+                }
             }
 
             return foundBags;
