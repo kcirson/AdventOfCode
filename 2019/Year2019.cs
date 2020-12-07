@@ -21,6 +21,9 @@ namespace AdventOfCode._2019
                 case 3:
                     Day3.Run();
                     return true;
+                case 4:
+                    Day4.Run();
+                    return true;
                 default:
                     return false;
             }
