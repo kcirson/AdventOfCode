@@ -73,7 +73,7 @@ namespace AdventOfCode._2020
             private int Accumulator { get; set; }
             private Dictionary<int, string> Instructions { get; set; }
             private int AmountOfInstruction { get; set; }
-            private List<int> PastInstructions { get; set; }
+            private HashSet<int> PastInstructions { get; set; }
 
             public Game()
             {
@@ -108,7 +108,7 @@ namespace AdventOfCode._2020
             public void Reset()
             {
                 Accumulator = 0;
-                PastInstructions = new List<int>();
+                PastInstructions = new HashSet<int>();
                 Instructions = new Dictionary<int, string>();
             }
 

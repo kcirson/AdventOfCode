@@ -146,7 +146,7 @@ namespace AdventOfCode._2020
 
             ConcurrentQueue<Bag> queue = new ConcurrentQueue<Bag>(containsColor);
 
-            while (queue.Count > 0)
+            while (!queue.IsEmpty)
             {
                 if (queue.TryDequeue(out Bag bag))
                 {
