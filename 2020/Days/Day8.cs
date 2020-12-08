@@ -31,26 +31,59 @@ namespace AdventOfCode._2020
 
         private static int Part2()
         {
-            return 0;
+            Game game = new Game();
+            Queue<string> jumps = new Queue<string>(Input.FindAll(s => s.Contains("jmp")));
+            Queue<string> nops = new Queue<string>(Input.FindAll(s => s.Contains("nop")));
+
+            bool ExitedNormally = false;
+
+            while (!ExitedNormally)
+            {
+                game.Reset();
+                var temp = Input;
+
+                if(jumps.Count > 0)
+                {
+                    string jump = jumps.Dequeue();
+                    string operation = temp.First(op => op == jump);
+                    temp[temp.IndexOf(operation)] = operation.Replace("jmp", "nop");
+                }
+                else if(nops.Count > 0)
+                {
+                    string nop = nops.Dequeue();
+                    string operation = temp.First(op => op == nop);
+
+                    temp[temp.IndexOf(operation)] = operation.Replace("nop", "jmp");
+                }
+                else
+                {
+                    ExitedNormally = true;
+                }
+
+                game.Run(temp);
+
+                ExitedNormally = game.HasExitedNormally();
+            }
+
+            return game.GetAccumulator();
         }
 
         private class Game
         {
             private int Accumulator { get; set; }
-            Dictionary<int, string> Instructions { get; set; }
-            List<int> PastInstructions { get; set; }
+            private Dictionary<int, string> Instructions { get; set; }
+            private int AmountOfInstruction { get; set; }
+            private List<int> PastInstructions { get; set; }
 
             public Game()
             {
-                Accumulator = 0;
-                PastInstructions = new List<int>();
-                Instructions = new Dictionary<int, string>();
+                Reset();
             }
 
             public void Run(List<string> values)
             {
-                int count = values.Count;
-                for (int i = 0; i < count; i++)
+                AmountOfInstruction = values.Count;
+                for (int i = 0; i < AmountOfInstruction; i++)
                 {
                     Instructions.Add(i, values[i]);
                 }
@@ -60,11 +93,24 @@ namespace AdventOfCode._2020
 
                 while (!stop)
                 {
-                    string value = Instructions[action];
-                    stop = DoAction(value, action, out action);
+                    if(action < Instructions.Count)
+                    {
+                        string value = Instructions[action];
+                        stop = DoAction(value, action, out action);
+                    }
+                    else
+                    {
+                        stop = true;
+                    }
                 }
             }
 
+            public void Reset()
+            {
+                Accumulator = 0;
+                PastInstructions = new List<int>();
+                Instructions = new Dictionary<int, string>();
+            }
 
             private bool DoAction(string operation, int current, out int next)
             {
@@ -102,6 +148,7 @@ namespace AdventOfCode._2020
             }
 
             public int GetAccumulator() => Accumulator;
+            public bool HasExitedNormally() => PastInstructions.Last() == Instructions.Last().Key;
 
         }
     }
