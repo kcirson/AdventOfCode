@@ -20,9 +20,49 @@ namespace AdventOfCode._2020
             Console.WriteLine(Part2());
         }
 
-        private static int Part1()
+        private static long Part1()
         {
-            return 0;
+            List<long> numbers = Input.Select(long.Parse).ToList();
+            int count = numbers.Count;
+            Queue<long> preamble = new Queue<long>();
+            bool stop = false;
+            long noSum = 0;
+
+            for (int i = 0; i < 25; i++)
+                preamble.Enqueue(numbers[i]);
+
+            for(int i = 25; i < count; i++)
+            {
+                long number = numbers[i];
+
+                foreach(long num in preamble)
+                {
+                    long numberToFind = number - num;
+
+                    if (preamble.Contains(numberToFind) && num != numberToFind)
+                    {
+                        break;
+                    }
+
+                    if (num == preamble.Last())
+                        stop = true;
+                }
+
+                if (stop)
+                {
+                    noSum = number;
+                    break;
+                }
+                else
+                {
+
+                }
+
+                preamble.Dequeue();
+                preamble.Enqueue(number);
+            }
+            
+            return noSum;
         }
 
         private static int Part2()
