@@ -31,11 +31,11 @@ namespace AdventOfCode._2020
             for (int i = 0; i < 25; i++)
                 preamble.Enqueue(numbers[i]);
 
-            for(int i = 25; i < count; i++)
+            for (int i = 25; i < count; i++)
             {
                 long number = numbers[i];
 
-                foreach(long num in preamble)
+                foreach (long num in preamble)
                 {
                     long numberToFind = number - num;
 
@@ -61,12 +61,50 @@ namespace AdventOfCode._2020
                 preamble.Dequeue();
                 preamble.Enqueue(number);
             }
-            
+
             return noSum;
         }
 
-        private static int Part2()
+        private static long Part2()
         {
+            List<long> numbers = Input.Select(long.Parse).ToList();
+            long number = Part1();
+            int count = numbers.Count; //numbers.IndexOf(number);
+            int numberIndex = numbers.IndexOf(number);
+            List<long> set = new List<long>();
+
+            long sum = 0;
+
+            Queue<long> numberQueue = new Queue<long>(numbers.GetRange(0, numberIndex));
+            bool stop = false;
+
+            while (!stop)
+            {
+                for (int i = 0; i < numberIndex; i++)
+                {
+                    long current = numberQueue.ToList()[i];
+                    long added = sum + current;
+
+                    if (added == number)
+                    {
+                        stop = true;
+                        set = numberQueue.ToList().GetRange(0, i);
+
+                        return set.Min() + set.Max();
+                    }
+                    else
+                    {
+                        sum = added;
+                    }
+                }
+
+                if (!stop)
+                    numberQueue.Dequeue();
+
+                numberIndex = numberQueue.Count;
+                sum = 0;
+            }
+
             return 0;
         }
     }
