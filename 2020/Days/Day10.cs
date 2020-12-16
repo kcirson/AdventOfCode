@@ -43,7 +43,7 @@ namespace AdventOfCode._2020
         {
             public List<Adapter> Adapters { get; set; } = new List<Adapter>();
             public List<AdapterChain> Chain { get; set; }
-            public Dictionary<long, AdapterChain> PossibleChain = new Dictionary<long, AdapterChain>();
+            public Dictionary<int, AdapterChain> PossibleChain = new Dictionary<int, AdapterChain>();
 
             public int JoltageOutput { get; }
 
@@ -89,11 +89,14 @@ namespace AdventOfCode._2020
 
                 foreach(var joltage in PossibleChain.Keys)
                 {
-                    for(var j = joltage - 3; j < joltage; j++)
+                    Adapter found = orderedAdapters.Find(ad => ad.Joltage == joltage);
+
+                    if(found != null)
                     {
-                        if (PossibleChain.ContainsKey(j))
+                        for(int i = found.MinimumJoltage; i < found.MaximumJoltage; i++)
                         {
-                            PossibleChain[j].Children.Add(PossibleChain[j]);
+                            if (PossibleChain.ContainsKey(i))
+                                PossibleChain[joltage].Children.Add(PossibleChain[i]);
                         }
                     }
                 }
@@ -104,22 +107,17 @@ namespace AdventOfCode._2020
         {
             private int _joltage { get; set; }
             public int Joltage => _joltage;
-            private int[] SupportedJoltage { get; set; }
+            public int MinimumJoltage => Joltage - 3;
+            public int MaximumJoltage => Joltage;
 
             public Adapter(int joltage)
             {
                 _joltage = joltage;
-                SupportedJoltage = Enumerable.Range(_joltage - 3, 3).ToArray();
             }
 
             public bool CanSupportJoltage(int joltage)
             {
-                return Array.IndexOf(SupportedJoltage, joltage) != -1;
-            }
-
-            public void ChangeJoltage(int newJoltage)
-            {
-                _joltage = newJoltage;
+                return joltage >= MinimumJoltage && joltage < MaximumJoltage;
             }
 
             public bool Equals(Adapter other)
@@ -161,7 +159,7 @@ namespace AdventOfCode._2020
             public Adapter Adapter { get; set; }
             public int Difference { get; set; }
             public List<AdapterChain> Children { get; set; } = new List<AdapterChain>();
-            public long PathsToZero = long.MinValue;
+            public long PathsToZero = -1L;
 
             public AdapterChain(Adapter adapter, int diff)
             {
@@ -171,23 +169,11 @@ namespace AdventOfCode._2020
 
             public long GetPathsToZero()
             {
-                if (PathsToZero == long.MinValue)
-                {
+                if (PathsToZero == -1L)
                     PathsToZero = Children.Select(c => c.GetPathsToZero()).Sum() + (Adapter.Joltage < 4 ? 1 : 0);
-                }
 
                 return PathsToZero;
             }
-        }
-
-        public static IEnumerable<T> SelectManyRecursive<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> selector)
-        {
-            IEnumerable<T> result = source.SelectMany(selector);
-
-            if (!result.Any())
-                return result;
-
-            return result.Concat(result.SelectManyRecursive(selector));
         }
     }
 }
