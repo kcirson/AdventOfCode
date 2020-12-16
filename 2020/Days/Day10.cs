@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace AdventOfCode._2020
         private static int Part1()
         {
             AdapterBag bag = new AdapterBag(Input);
-
+            bag.CreateChain();
             int oneSteps = bag.Chain.Count(ch => ch.Difference == 1);
             int threeSteps = bag.Chain.Count(ch => ch.Difference == 3);
 
@@ -32,15 +33,19 @@ namespace AdventOfCode._2020
 
         private static long Part2()
         {
-            return 0;
+            AdapterBag bag = new AdapterBag(Input);
+            bag.CheckAllPossbileChains();
+
+            return bag.PossibleChain[bag.JoltageOutput].GetPathsToZero();
         }
 
         private class AdapterBag
         {
-            List<Adapter> Adapters { get; set; } = new List<Adapter>();
+            public List<Adapter> Adapters { get; set; } = new List<Adapter>();
             public List<AdapterChain> Chain { get; set; }
+            public Dictionary<long, AdapterChain> PossibleChain = new Dictionary<long, AdapterChain>();
 
-            public int JoltageOutput => Adapters.Max(ad => ad.Joltage) + 3;
+            public int JoltageOutput { get; }
 
             public AdapterBag(List<int> ratings)
             {
@@ -49,14 +54,14 @@ namespace AdventOfCode._2020
                     Adapters.Add(new Adapter(joltage));
                 }
 
-                Adapters.Add(new Adapter(JoltageOutput));
+                JoltageOutput = Adapters.Max(ad => ad.Joltage) + 3;
 
-                CreateChain(Adapters);
+                Adapters.Add(new Adapter(JoltageOutput));
             }
 
-            public void CreateChain(List<Adapter> adapters)
+            public void CreateChain()
             {
-                List<Adapter> temp = new List<Adapter>(adapters);
+                List<Adapter> temp = new List<Adapter>(Adapters);
                 List<AdapterChain> chain = new List<AdapterChain>();
 
                 int joltageToSupport = 0;
@@ -73,6 +78,25 @@ namespace AdventOfCode._2020
                 }
 
                 Chain = chain;
+            }
+
+            public void CheckAllPossbileChains()
+            {
+                List<Adapter> orderedAdapters = new List<Adapter>(Adapters).OrderBy(a => a.Joltage).ToList();
+
+                foreach (Adapter ad in orderedAdapters)
+                    PossibleChain.Add(ad.Joltage, new AdapterChain(ad, 0));
+
+                foreach(var joltage in PossibleChain.Keys)
+                {
+                    for(var j = joltage - 3; j < joltage; j++)
+                    {
+                        if (PossibleChain.ContainsKey(j))
+                        {
+                            PossibleChain[j].Children.Add(PossibleChain[j]);
+                        }
+                    }
+                }
             }
         }
 
@@ -115,18 +139,55 @@ namespace AdventOfCode._2020
                     return 0;
 
             }
+
+            public override string ToString()
+            {
+                return Joltage.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as Adapter);
+            }
+
+            public override int GetHashCode()
+            {
+                return Joltage.GetHashCode();
+            }
         }
 
         private class AdapterChain
         {
-            Adapter Adapter { get; set; }
+            public Adapter Adapter { get; set; }
             public int Difference { get; set; }
+            public List<AdapterChain> Children { get; set; } = new List<AdapterChain>();
+            public long PathsToZero = long.MinValue;
 
             public AdapterChain(Adapter adapter, int diff)
             {
                 Adapter = adapter;
                 Difference = diff;
             }
+
+            public long GetPathsToZero()
+            {
+                if (PathsToZero == long.MinValue)
+                {
+                    PathsToZero = Children.Select(c => c.GetPathsToZero()).Sum() + (Adapter.Joltage < 4 ? 1 : 0);
+                }
+
+                return PathsToZero;
+            }
+        }
+
+        public static IEnumerable<T> SelectManyRecursive<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> selector)
+        {
+            IEnumerable<T> result = source.SelectMany(selector);
+
+            if (!result.Any())
+                return result;
+
+            return result.Concat(result.SelectManyRecursive(selector));
         }
     }
 }

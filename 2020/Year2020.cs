@@ -40,6 +40,9 @@ namespace AdventOfCode._2020
                 case 10:
                     Day10.Run();
                     return true;
+                case 11:
+                    Day11.Run();
+                    return true;
                 default:
                     return false;
             }
