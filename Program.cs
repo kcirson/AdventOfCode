@@ -1,5 +1,7 @@
-﻿using AdventOfCode._2019;
+﻿using AdventOfCode._2015;
+using AdventOfCode._2019;
 using AdventOfCode._2020;
+using AdventOfCode._2021;
 using System;
 
 namespace AdventOfCode
@@ -13,8 +15,6 @@ namespace AdventOfCode
             int year = ReadYear("Choose which year you want and we will check if we have solutions for this year (Press enter for current year)");
 
             StartDayFromYear(year, "Now please choose a day (1-25) to pick a solution for this year");
-
-
 
             Console.ReadLine();
         }
@@ -62,10 +62,14 @@ namespace AdventOfCode
         {
             switch (year)
             {
+                case 2015:
+                    return Year2015.StartDay(day);
                 case 2019:
                     return Year2019.StartDay(day);
                 case 2020:
                     return Year2020.StartDay(day);
+                case 2021:
+                    return Year2021.StartDay(day);
                 default:
                     return false;
             }
