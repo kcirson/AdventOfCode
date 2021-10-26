@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace AdventOfCode._2015
             Console.WriteLine(Part1());
             Console.WriteLine();
             Console.WriteLine("Part 2:");
-            //Console.WriteLine(Part2());
+            Console.WriteLine(Part2());
         }
 
         private static int Part1()
@@ -28,6 +29,14 @@ namespace AdventOfCode._2015
 
             return total;
         }
+        
+        private static int Part2()
+        {
+            var total = Presents.Sum(p => p.Ribbon);
+
+            return total;
+        }
+
     }
 
     public class Prism
@@ -38,6 +47,7 @@ namespace AdventOfCode._2015
         public int SquareFeet { get; set; }
         public int Slack { get; set; }
         public int TotalPaper { get; set; }
+        public int Ribbon { get; set; }
 
         public Prism(string input)
         {
@@ -54,6 +64,14 @@ namespace AdventOfCode._2015
             Slack = new int[] { lw, wh, hl }.Min();
             SquareFeet = 2 * lw + 2 * wh + 2 * hl;
             TotalPaper = Slack + SquareFeet;
+
+            List<int> dimensions = new() { Length, Width, Height };
+            dimensions.Sort();
+            int firstLowest = dimensions[0];
+            int secondLowest = dimensions[1];
+
+
+            Ribbon = firstLowest + firstLowest+ secondLowest+ secondLowest+ (Length * Width * Height);
         }
     }
 }
