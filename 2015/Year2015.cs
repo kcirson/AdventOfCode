@@ -15,6 +15,9 @@ namespace AdventOfCode._2015
                 case 1:
                     Day1.Run();
                     return true;
+                case 2:
+                    Day2.Run();
+                    return true;
                 default:
                     return false;
             }
