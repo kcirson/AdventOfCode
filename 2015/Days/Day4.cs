@@ -24,28 +24,19 @@ namespace AdventOfCode._2015
 
         private static int Part1()
         {
-            int salt = 0;
-
-            Regex regex = new("^0{5}");
-
-            while (true)
-            {
-                string md5 = CreateMD5($"{Input}{salt}");
-
-                if (regex.Match(md5).Success)
-                    break;
-
-                salt++;
-            }
-
-            return salt;
+            return CalculateSalt(5);
         }
 
         private static int Part2()
         {
+            return CalculateSalt(6);
+        }
+
+        private static int CalculateSalt(int startingZeroes)
+        {
             int salt = 0;
 
-            Regex regex = new("^0{6}");
+            Regex regex = new($"^0{{{startingZeroes}}}");
 
             while (true)
             {
