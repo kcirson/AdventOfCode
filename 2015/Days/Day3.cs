@@ -52,7 +52,6 @@ namespace AdventOfCode._2015
 
             bool santaGoes = true;
 
-
             foreach (char c in Input)
             {
                 if (santaGoes)
@@ -82,7 +81,6 @@ namespace AdventOfCode._2015
 
             return santaPresents;
         }
-
     }
 
     public class Dimension
