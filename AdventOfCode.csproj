@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="2021\Days\" />
     <Folder Include="2021\Inputs\" />
     <Folder Include="Helpers\" />
   </ItemGroup>

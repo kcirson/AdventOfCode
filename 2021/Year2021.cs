@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode._2021;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,8 @@ namespace AdventOfCode._2021
             switch (day)
             {
                 case 1:
-                    return false;
+                    Day1.Run();
+                    return true;
                 default:
                     return false;
             }
