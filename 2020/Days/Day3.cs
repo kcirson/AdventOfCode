@@ -4,31 +4,31 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdventOfCode._2020
+namespace AdventOfCode._2020;
+
+public static class Day3
 {
-    public static class Day3
+    private static List<char[]> Input =>
+            InputHelper.GetInput(2020, 3).Select(s => s.ToCharArray()).ToList();
+
+    public static void Run()
     {
-        private static List<char[]> Input =>
-                InputHelper.GetInput(2020, 3).Select(s => s.ToCharArray()).ToList();
+        Console.WriteLine("Part 1:");
+        Console.WriteLine(Part1());
+        Console.WriteLine();
+        Console.WriteLine("Part 2:");
+        Console.WriteLine(Part2());
+    }
 
-        public static void Run()
-        {
-            Console.WriteLine("Part 1:");
-            Console.WriteLine(Part1());
-            Console.WriteLine();
-            Console.WriteLine("Part 2:");
-            Console.WriteLine(Part2());
-        }
+    private static int Part1()
+    {
+        return CheckTrees(3, 1);
+    }
 
-        private static int Part1()
+    private static long Part2()
+    {
+        List<Tuple<int, int>> Slopes = new()
         {
-            return CheckTrees(3, 1);
-        }
-
-        private static long Part2()
-        {
-            List<Tuple<int, int>> Slopes = new List<Tuple<int, int>>
-            {
                 new Tuple<int, int>(1, 1),
                 new Tuple<int, int>(3, 1),
                 new Tuple<int, int>(5, 1),
@@ -36,40 +36,39 @@ namespace AdventOfCode._2020
                 new Tuple<int, int>(1, 2)
             };
 
-            long treeCount = 1;
+        long treeCount = 1;
 
-            Parallel.ForEach(Slopes, slope =>
-            {
-                treeCount *= CheckTrees(slope.Item1, slope.Item2);
-            });
-
-            return treeCount;
-        }
-
-        private static int CheckTrees(int rightSteps, int downSteps)
+        Parallel.ForEach(Slopes, slope =>
         {
-            int count = Input.Count;
-            int treeCount = 0;
-            int right = rightSteps;
-            int down = downSteps;
+            treeCount *= CheckTrees(slope.Item1, slope.Item2);
+        });
 
-            while (down < count)
-            {
-                char[] row = Input[down];
+        return treeCount;
+    }
 
-                if (right >= row.Length)
-                    right -= row.Length;
+    private static int CheckTrees(int rightSteps, int downSteps)
+    {
+        int count = Input.Count;
+        int treeCount = 0;
+        int right = rightSteps;
+        int down = downSteps;
 
-                char obj = row[right];
+        while (down < count)
+        {
+            char[] row = Input[down];
 
-                if (obj == '#')
-                    treeCount++;
+            if (right >= row.Length)
+                right -= row.Length;
 
-                right += rightSteps;
-                down += downSteps;
-            }
+            char obj = row[right];
 
-            return treeCount;
+            if (obj == '#')
+                treeCount++;
+
+            right += rightSteps;
+            down += downSteps;
         }
+
+        return treeCount;
     }
 }

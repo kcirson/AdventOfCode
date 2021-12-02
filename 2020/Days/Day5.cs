@@ -4,86 +4,83 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode._2020
+namespace AdventOfCode._2020;
+
+public static class Day5
 {
-    class Day5
+    private static List<string> Input =>
+            InputHelper.GetInput(2020, 5);
+
+    public static void Run()
     {
-        private static List<string> Input =>
-                InputHelper.GetInput(2020, 5);
+        Console.WriteLine("Part 1:");
+        Console.WriteLine(Part1());
+        Console.WriteLine();
+        Console.WriteLine("Part 2:");
+        Console.WriteLine(Part2());
+    }
 
-        private int PlaneRows = 127;
+    private static int Part1()
+    {
+        Plane plane = new(128, 8);
+        List<int> seatIds = Input.Select(s => plane.CheckSeat(s)).ToList();
 
-        public static void Run()
+        return seatIds.Max();
+    }
+    private static int Part2()
+    {
+        Plane plane = new(128, 8);
+        List<int> seatIds = Input.Select(s => plane.CheckSeat(s)).ToList();
+
+        return Enumerable.Range(0, seatIds.Max()).Except(seatIds).Max();
+    }
+
+    private class Plane
+    {
+        private int RowsOfSeats { get; set; }
+        private int SeatsPerRow { get; set; }
+
+        public Plane(int rows, int seats)
         {
-            Console.WriteLine("Part 1:");
-            Console.WriteLine(Part1());
-            Console.WriteLine();
-            Console.WriteLine("Part 2:");
-            Console.WriteLine(Part2());
+            RowsOfSeats = rows;
+            SeatsPerRow = seats;
         }
 
-        private static int Part1()
+        public int CheckSeat(string boardingPass)
         {
-            Plane plane = new Plane(128, 8);
-            List<int> seatIds = Input.Select(s => plane.CheckSeat(s)).ToList();
+            int minRow = 0;
+            int maxRow = RowsOfSeats - 1;
 
-            return seatIds.Max();
-        }
-        private static int Part2()
-        {
-            Plane plane = new Plane(128, 8);
-            List<int> seatIds = Input.Select(s => plane.CheckSeat(s)).ToList();
-
-            return Enumerable.Range(0, seatIds.Max()).Except(seatIds).Max();
-        }
-
-        private class Plane
-        {
-            private int RowsOfSeats { get; set; }
-            private int SeatsPerRow { get; set; }
-
-            public Plane(int rows, int seats)
+            for (int i = 0; i < 7; i++)
             {
-                RowsOfSeats = rows;
-                SeatsPerRow = seats;
+                switch (boardingPass[i])
+                {
+                    case 'F':
+                        maxRow = (int)Math.Floor((minRow + maxRow) / 2.0);
+                        break;
+                    case 'B':
+                        minRow = (int)Math.Floor((minRow + maxRow) / 2.0 + 1);
+                        break;
+                }
             }
 
-            public int CheckSeat(string boardingPass)
+            int minSeat = 0;
+            int maxSeat = SeatsPerRow - 1;
+
+            for (int i = 7; i < boardingPass.Length; i++)
             {
-                int minRow = 0;
-                int maxRow = RowsOfSeats - 1;
-
-                for (int i = 0; i < 7; i++)
+                switch (boardingPass[i])
                 {
-                    switch (boardingPass[i])
-                    {
-                        case 'F':
-                            maxRow = (int)Math.Floor((minRow + maxRow) / 2.0);
-                            break;
-                        case 'B':
-                            minRow = (int)Math.Floor((minRow + maxRow) / 2.0 + 1);
-                            break;
-                    }
+                    case 'R':
+                        minSeat = (int)Math.Floor((minSeat + maxSeat) / 2.0 + 1);
+                        break;
+                    case 'L':
+                        maxSeat = (int)Math.Floor((minSeat + maxSeat) / 2.0);
+                        break;
                 }
-
-                int minSeat = 0;
-                int maxSeat = SeatsPerRow - 1;
-
-                for (int i = 7; i < boardingPass.Length; i++)
-                {
-                    switch (boardingPass[i])
-                    {
-                        case 'R':
-                            minSeat = (int)Math.Floor((minSeat + maxSeat) / 2.0 + 1);
-                            break;
-                        case 'L':
-                            maxSeat = (int)Math.Floor((minSeat + maxSeat) / 2.0);
-                            break;
-                    }
-                }
-
-                return minRow * SeatsPerRow + minSeat;
             }
+
+            return minRow * SeatsPerRow + minSeat;
         }
     }
 }

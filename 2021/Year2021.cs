@@ -1,27 +1,19 @@
-﻿using AdventOfCode._2021;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace AdventOfCode._2021;
 
-namespace AdventOfCode._2021
+public class Year2021
 {
-    public class Year2021
+    public static bool StartDay(int day)
     {
-        public static bool StartDay(int day)
+        switch (day)
         {
-            switch (day)
-            {
-                case 1:
-                    Day1.Run();
-                    return true;
-                case 2:
-                    Day2.Run();
-                    return true;
-                default:
-                    return false;
-            }
+            case 1:
+                Day1.Run();
+                return true;
+            case 2:
+                Day2.Run();
+                return true;
+            default:
+                return false;
         }
     }
 }
