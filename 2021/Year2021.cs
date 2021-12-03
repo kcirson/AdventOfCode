@@ -12,6 +12,9 @@ public class Year2021
             case 2:
                 Day2.Run();
                 return true;
+            case 3:
+                Day3.Run();
+                return true;
             default:
                 return false;
         }
