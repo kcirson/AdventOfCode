@@ -43,8 +43,8 @@ public class Day3
 
         for (int i = 0; i < length; i++)
         {
-            int amountOfOnes = Input.Where(val => val[i] == '1').Count();
-            int amountOfZeroes = Input.Where(val => val[i] == '0').Count();
+            int amountOfOnes = Input.Count(val => val[i] == '1');
+            int amountOfZeroes = Input.Count(val => val[i] == '0');
 
             if (amountOfOnes > amountOfZeroes)
             {
@@ -78,32 +78,24 @@ public class Day3
 
             if (oxygen.Count > 1)
             {
-                int amountOfOnes = oxygen.Where(val => val[i] == '1').Count();
-                int amountOfZeroes = oxygen.Where(val => val[i] == '0').Count();
+                int amountOfOnes = oxygen.Count(val => val[i] == '1');
+                int amountOfZeroes = oxygen.Count(val => val[i] == '0');
 
                 if (amountOfOnes == amountOfZeroes || amountOfOnes > amountOfZeroes)
-                {
                     oxygen = oxygen.Where(val => val[i] == '1').ToList();
-                }
                 else
-                {
                     oxygen = oxygen.Where(val => val[i] == '0').ToList();
-                }
             }
 
             if (scrubber.Count > 1)
             {
-                int amountOfOnes = scrubber.Where(val => val[i] == '1').Count();
-                int amountOfZeroes = scrubber.Where(val => val[i] == '0').Count();
+                int amountOfOnes = scrubber.Count(val => val[i] == '1');
+                int amountOfZeroes = scrubber.Count(val => val[i] == '0');
 
                 if (amountOfOnes == amountOfZeroes || amountOfOnes > amountOfZeroes)
-                {
                     scrubber = scrubber.Where(val => val[i] == '0').ToList();
-                }
                 else
-                {
                     scrubber = scrubber.Where(val => val[i] == '1').ToList();
-                }
             }
         }
 
