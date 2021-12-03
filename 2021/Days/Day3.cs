@@ -113,10 +113,3 @@ public class Day3
         return oxygenData * scrubberData;
     }
 }
-
-public class Values
-{
-    public int Index { get; set; }
-    public int Value { get; set; }
-}
-
