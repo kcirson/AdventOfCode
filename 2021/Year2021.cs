@@ -18,6 +18,9 @@ public class Year2021
             case 4:
                 Day4.Run();
                 return true;
+            case 5:
+                Day5.Run();
+                return true;
             default:
                 return false;
         }
