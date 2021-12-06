@@ -61,10 +61,6 @@ class Program
 
     private static bool StartSolution(int year, int day)
     {
-        string[] days = Directory.GetFiles($"..\\..\\..\\Years\\{year}\\Days");
-
-        string dayFile = days.FirstOrDefault(day => day.EndsWith($"Day{day}.cs"));
-
         ISolution obj = GetInstance($"AdventOfCode._{year}.Day{day}");
 
         if (obj != null)
