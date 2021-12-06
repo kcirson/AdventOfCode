@@ -30,6 +30,9 @@ public class Year2015
             case 6:
                 Day6.Run();
                 return true;
+            case 7:
+                Day7.Run();
+                return true;
             default:
                 return false;
         }

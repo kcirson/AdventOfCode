@@ -45,7 +45,7 @@ public static class InputHelper
         File.Exists(GetFilePath(year, day));
 
     private static string GetFilePath(int year, int day) =>
-        $"..\\..\\..\\{year}\\Inputs\\Day{day}Input.txt";
+        $"..\\..\\..\\Years\\{year}\\Inputs\\Day{day}Input.txt";
 
     private static void GetInputFromSite(int year, int day, out bool success)
     {

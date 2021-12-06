@@ -3,6 +3,8 @@ using AdventOfCode._2019;
 using AdventOfCode._2020;
 using AdventOfCode._2021;
 using System;
+using System.Linq;
+using System.IO;
 
 namespace AdventOfCode;
 
@@ -27,7 +29,10 @@ class Program
 
             string input = Console.ReadLine();
 
-            if (int.TryParse(input, out int year) && Array.IndexOf(Constants.AvailableYears, year) != -1)
+            string[] yearDirectories = Directory.GetDirectories("..\\..\\..\\Years");
+            int[] years = yearDirectories.Select(path => int.Parse(new DirectoryInfo(path).Name)).ToArray();
+
+            if (int.TryParse(input, out int year) && Array.IndexOf(years, year) != -1)
                 return year;
 
             if (string.IsNullOrEmpty(input))
