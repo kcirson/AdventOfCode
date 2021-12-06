@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode._2021;
 
-public class Day3
+public class Day3 : ISolution
 {
     private static List<string> Input =>
     InputHelper.GetInput(2021, 3);
@@ -25,7 +26,7 @@ public class Day3
     //    "00010",
     //    "01010"};
 
-    public static void Run()
+    public void Run()
     {
         Console.WriteLine("Part 1:");
         Console.WriteLine(Part1());

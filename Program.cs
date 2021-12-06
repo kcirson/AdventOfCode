@@ -5,6 +5,7 @@ using AdventOfCode._2021;
 using System;
 using System.Linq;
 using System.IO;
+using AdventOfCode.Helpers;
 
 namespace AdventOfCode;
 
@@ -60,13 +61,31 @@ class Program
 
     private static bool StartSolution(int year, int day)
     {
-        return year switch
+        string[] days = Directory.GetFiles($"..\\..\\..\\Years\\{year}\\Days");
+
+        string dayFile = days.FirstOrDefault(day => day.EndsWith($"Day{day}.cs"));
+
+        ISolution obj = GetInstance($"AdventOfCode._{year}.Day{day}");
+
+        if (obj != null)
         {
-            2015 => Year2015.StartDay(day),
-            2019 => Year2019.StartDay(day),
-            2020 => Year2020.StartDay(day),
-            2021 => Year2021.StartDay(day),
-            _ => false,
-        };
+            obj.Run();
+            return true;
+        }
+
+        return false;
+    }
+
+    private static ISolution GetInstance(string strFullyQualifiedName)
+    {
+        Type t = Type.GetType(strFullyQualifiedName);
+        try
+        {
+            return (ISolution)Activator.CreateInstance(t);
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

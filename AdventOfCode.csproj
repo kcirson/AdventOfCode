@@ -6,8 +6,4 @@
     <StartupObject>AdventOfCode.Program</StartupObject>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 </Project>

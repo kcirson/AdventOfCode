@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using AdventOfCode.Helpers;
 
 namespace AdventOfCode._2020;
 
-public static class Day3
+public class Day3 : ISolution
 {
     private static List<char[]> Input =>
             InputHelper.GetInput(2020, 3).Select(s => s.ToCharArray()).ToList();
 
-    public static void Run()
+    public void Run()
     {
         Console.WriteLine("Part 1:");
         Console.WriteLine(Part1());

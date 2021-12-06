@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode._2020;
 
-public static class Day6
+public class Day6 : ISolution
 {
     private static List<string> Input =>
     InputHelper.GetInputString(2020, 6).Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
 
-    public static void Run()
+    public void Run()
     {
         Console.WriteLine("Part 1:");
         Console.WriteLine(Part1());

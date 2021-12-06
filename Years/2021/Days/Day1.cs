@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode._2021;
 
-public static class Day1
+public class Day1 : ISolution
 {
     private static List<int> Input =>
         InputHelper.GetInput(2021, 1).Select(int.Parse).ToList();
 
-    public static void Run()
+    public void Run()
     {
         Console.WriteLine("Part 1:");
         Console.WriteLine(Part1());
@@ -20,7 +21,7 @@ public static class Day1
         Console.WriteLine(Part2());
     }
 
-    private static int Part1()
+    private int Part1()
     {
         int prev = 0;
         int increased = 0;
@@ -42,7 +43,7 @@ public static class Day1
         return increased;
     }
 
-    private static int Part2()
+    private int Part2()
     {
         int count = Input.Count;
         int prev = 0;

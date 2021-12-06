@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode.Helpers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode._2019;
 
-public static class Day4
+public class Day4 : ISolution
 {
     private static string Input =>
         InputHelper.GetInputString(2019, 4);
 
-    public static void Run()
+    public void Run()
     {
         Console.WriteLine("Part 1:");
         Console.WriteLine(Part1());
@@ -120,18 +121,6 @@ public static class Day4
         return numbersTwice.Count > 0;
     }
 
-    private static List<int> ToIntList(this int integer)
-    {
-        List<int> individual = new();
-
-        while (integer > 0)
-        {
-            individual.Add(integer % 10);
-            integer /= 10;
-        }
-
-        individual.Reverse();
-
-        return individual;
-    }
+    
 }
+
