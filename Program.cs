@@ -39,7 +39,7 @@ class Program
             if (string.IsNullOrEmpty(input))
                 return DateTime.Now.Year;
 
-            Console.WriteLine("We have no solution for this year or you didnt enter a number");
+            Console.WriteLine("We have no solution for this year");
         }
     }
 
@@ -61,11 +61,11 @@ class Program
 
     private static bool StartSolution(int year, int day)
     {
-        ISolution obj = GetInstance($"AdventOfCode._{year}.Day{day}");
+        ISolution solution = GetInstance($"AdventOfCode._{year}.Day{day}");
 
-        if (obj != null)
+        if (solution != null)
         {
-            obj.Run();
+            solution.Run();
             return true;
         }
 
