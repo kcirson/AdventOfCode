@@ -37,39 +37,15 @@ public class Day7 : ISolution
 
     private static int Part1()
     {
-        Dictionary<int, int> crabs = Input.GroupBy(i => i).ToDictionary(g => g.Key, g => g.Count());
-        Dictionary<int, int> locations = new();
-
-        int min = crabs.Keys.Min();
-        int max = crabs.Keys.Max();
-        int lowestFuel = 0;
-
-        for (int i = min; i < max; i++)
-        {
-            int goTo = i;
-            int currentFuel = 0;
-
-            foreach (int crab in crabs.Keys)
-            {
-                int amountOfCrabs = crabs[crab];
-                int fuel = crab - goTo;
-
-                fuel = Math.Abs(fuel);
-
-                currentFuel += fuel * amountOfCrabs;
-            }
-            
-            locations.Add(goTo, currentFuel);
-
-            if (i == min || currentFuel < lowestFuel)
-                lowestFuel = currentFuel;
-
-        }
-
-        return lowestFuel;
+        return CalculateFuel();
     }
 
     private static int Part2()
+    {
+        return CalculateFuel(false);
+    }
+
+    private static int CalculateFuel(bool part1 = true)
     {
         Dictionary<int, int> crabs = Input.GroupBy(i => i).ToDictionary(g => g.Key, g => g.Count());
         Dictionary<int, int> locations = new();
@@ -85,19 +61,24 @@ public class Day7 : ISolution
 
             foreach (int crab in crabs.Keys)
             {
-                int moveTo = Math.Abs(crab - goTo);
-                int fuel = 0;
-
-                for (int j = 0; j <= moveTo; j++)
-                {
-                    fuel += j;
-                }
-
                 int amountOfCrabs = crabs[crab];
+                int moveTo = Math.Abs(crab - goTo);
 
-                fuel = Math.Abs(fuel);
+                if (part1)
+                {
+                    currentFuel += moveTo * amountOfCrabs;
+                }
+                else
+                {
+                    int fuel = 0;
 
-                currentFuel += fuel * amountOfCrabs;
+                    for (int j = 0; j <= moveTo; j++)
+                    {
+                        fuel += j;
+                    }
+
+                    currentFuel += fuel * amountOfCrabs;
+                }
             }
 
             locations.Add(goTo, currentFuel);
