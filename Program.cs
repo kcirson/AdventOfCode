@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.IO;
 using AdventOfCode.Helpers;
+using System.Collections.Generic;
 
 namespace AdventOfCode;
 
@@ -27,17 +28,31 @@ class Program
         while (true)
         {
             Console.WriteLine(prompt);
-
             string input = Console.ReadLine();
-
-            string[] yearDirectories = Directory.GetDirectories("..\\..\\..\\Years");
-            int[] years = yearDirectories.Select(path => int.Parse(new DirectoryInfo(path).Name)).ToArray();
-
-            if (int.TryParse(input, out int year) && Array.IndexOf(years, year) != -1)
-                return year;
-
             if (string.IsNullOrEmpty(input))
-                return DateTime.Now.Year;
+                input = DateTime.Now.Year.ToString();
+
+            if (int.TryParse(input, out int year))
+            {
+                string[] yearDirectories = Directory.GetDirectories("..\\..\\..\\Years");
+                int[] years = yearDirectories.Select(path => int.Parse(new DirectoryInfo(path).Name)).ToArray();
+
+                if (Array.IndexOf(years, year) != -1)
+                    return year;
+            }
+
+            Console.WriteLine("We have no solution for this year, do you want to create it? Y/N");
+
+            string choice = Console.ReadLine().ToLower();
+
+            if (choice == "y")
+            {
+                Directory.CreateDirectory($"..\\..\\..\\Years\\{year}");
+                Directory.CreateDirectory($"..\\..\\..\\Years\\{year}\\Days");
+                Directory.CreateDirectory($"..\\..\\..\\Years\\{year}\\Inputs");
+
+                return year;
+            }
 
             Console.WriteLine("We have no solution for this year");
         }
@@ -55,7 +70,23 @@ class Program
                 stop = StartSolution(year, day);
 
             if (stop == false)
-                Console.WriteLine("We have no solution for this day or you didnt enter a correct number");
+            {
+                Console.WriteLine($"We have no solution for this day, do you want to create one for {day}? Y/N");
+
+                string choice = Console.ReadLine().ToLower();
+
+                if (choice == "y")
+                {
+                    DayCreator.CreateDay(year, day);
+                    
+                    Console.WriteLine($"Good luck with day {day}!");
+                }
+                else
+                {
+                    Console.WriteLine("We have no solution for this year");
+                }
+
+            }
         }
     }
 
