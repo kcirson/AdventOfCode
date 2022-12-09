@@ -6,7 +6,7 @@ namespace AdventOfCode._2020;
 public class Day7 : ISolution
 {
     private static List<string> Input =>
-        InputHelper.GetInput(2020, 7);
+        InputHelper.GetListString(2020, 7);
 
     public void Run()
     {

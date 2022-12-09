@@ -3,7 +3,7 @@
 public class Day2 : ISolution
 {
     private static List<string> Input =>
-        InputHelper.GetInput(2015, 2);
+        InputHelper.GetListString(2015, 2);
 
     private static List<Prism> Presents = Input.Select(s => new Prism(s)).ToList();
 

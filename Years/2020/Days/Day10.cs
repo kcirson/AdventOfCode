@@ -3,7 +3,7 @@
 public class Day10 : ISolution
 {
     private static List<int> Input =>
-        InputHelper.GetInput(2020, 10).Select(int.Parse).ToList();
+        InputHelper.GetListInt(2020, 10);
 
     public void Run()
     {

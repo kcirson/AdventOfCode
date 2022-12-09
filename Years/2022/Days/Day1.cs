@@ -2,14 +2,8 @@ namespace AdventOfCode._2022;
 
 public class Day1 : ISolution
 {
-    //private static List<string> Input =>
-    //     InputHelper.GetInput(2022, 1).ToList();
-
-    private static List<string> Input =>
-        new()
-        {
-            "",
-        };
+    private static List<int> Input =>
+         InputHelper.GetListInt(2022, 1);
 
     public void Run()
     {

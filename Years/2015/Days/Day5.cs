@@ -5,7 +5,7 @@ namespace AdventOfCode._2015;
 public class Day5 : ISolution
 {
     private static List<string> Input =>
-        InputHelper.GetInput(2015, 5);
+        InputHelper.GetListString(2015, 5);
 
     public void Run()
     {

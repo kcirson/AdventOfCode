@@ -2,7 +2,7 @@ namespace AdventOfCode._2021;
 public class Day11 : ISolution
 {
     private static List<string> Input =>
-         InputHelper.GetInput(2021, 11).ToList();
+         InputHelper.GetListString(2021, 11).ToList();
 
     //private static List<string> Input =>
     //    new()

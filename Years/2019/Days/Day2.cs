@@ -3,7 +3,7 @@
 public class Day2 : ISolution
 {
     private static List<int> Input =>
-        InputHelper.GetInput(2019, 2)[0].Split(',').Select(int.Parse).ToList();
+        InputHelper.GetInputString(2019, 2).Split(',').Select(int.Parse).ToList();
 
     public void Run()
     {

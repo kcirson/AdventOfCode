@@ -5,7 +5,7 @@ namespace AdventOfCode._2020;
 public class Day2 : ISolution
 {
     private static List<Rules> Input =>
-        InputHelper.GetInput(2020, 2).Select(s => new Rules(s)).ToList();
+        InputHelper.GetListString(2020, 2).Select(s => new Rules(s)).ToList();
 
     public void Run()
     {

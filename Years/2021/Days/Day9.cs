@@ -2,7 +2,7 @@
 public class Day9 : ISolution
 {
     private static List<string> Input =>
-         InputHelper.GetInput(2021, 9).ToList();
+         InputHelper.GetListString(2021, 9);
 
     //private static List<string> Input =>
     //    new()

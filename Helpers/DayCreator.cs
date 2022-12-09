@@ -11,14 +11,8 @@ $@"namespace AdventOfCode._{year};
 
 public class Day{day} : ISolution
 {{
-    //private static List<string> Input =>
-    //     InputHelper.GetInput({year}, {day}).ToList();
-
     private static List<string> Input =>
-        new()
-        {{
-            """",
-        }};
+         InputHelper.GetListString({year}, {day}).ToList();
 
     public void Run()
     {{

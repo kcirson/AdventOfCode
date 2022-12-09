@@ -52,11 +52,11 @@ void StartDayFromYear(int year, string prompt)
         if (int.TryParse(input, out int day) && day > 0 && day <= 25)
             stop = StartSolution(year, day);
 
-        if (stop == false)
+        if (!stop)
         {
             Console.WriteLine($"We have no solution for this day. Trying to create files for day {day}");
             DayCreator.CreateDay(year, day);
-            InputHelper.GetInputFromSite(year, day, out stop);
+            InputCreator.CreateInput(year, day, out stop);
 
             if (stop)
                 Console.WriteLine($"Good luck with day {day}!");
@@ -65,7 +65,6 @@ void StartDayFromYear(int year, string prompt)
         {
             Console.WriteLine("We have no solution for this year");
         }
-
     }
 }
 
