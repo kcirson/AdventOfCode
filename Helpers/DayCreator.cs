@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
-namespace AdventOfCode.Helpers
+namespace AdventOfCode.Helpers;
+
+public static class DayCreator
 {
-    public static class DayCreator
+    public static void CreateDay(int year, int day)
     {
-        public static void CreateDay(int year, int day)
-        {
-            string dayText =
-                $@"using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+        string dayText =
+$@"namespace AdventOfCode._{year};
 
-namespace AdventOfCode._{year};
 public class Day{day} : ISolution
 {{
     //private static List<string> Input =>
@@ -48,7 +39,11 @@ public class Day{day} : ISolution
         return 2;
     }}
 }}";
-            File.WriteAllText($"..\\..\\..\\Years\\{year}\\Days\\Day{day}.cs", dayText);
-        }
+        File.WriteAllText($"..\\..\\..\\Years\\{year}\\Days\\Day{day}.cs", dayText);
+    }
+
+    public static void CreateInputForDay(int year, int day)
+    {
+
     }
 }

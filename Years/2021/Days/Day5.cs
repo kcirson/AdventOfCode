@@ -1,11 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode._2021;
+﻿namespace AdventOfCode._2021;
 public class Day5 : ISolution
 {
     private static List<string> Input =>
@@ -188,7 +181,7 @@ public class Map
         {
             if (fromSecond < toSecond)
             {
-                while(fromFirst != toFirst && fromSecond != toSecond)
+                while (fromFirst != toFirst && fromSecond != toSecond)
                 {
                     AddPoint(fromFirst, fromSecond);
                     fromFirst--;

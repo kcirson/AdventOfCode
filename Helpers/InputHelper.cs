@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 
-namespace AdventOfCode;
+namespace AdventOfCode.Helpers;
 
 public static class InputHelper
 {
-    private static string cookieValue = string.Empty;
-
     public static List<string> GetInput(int year, int day)
     {
         bool success;
@@ -47,11 +43,17 @@ public static class InputHelper
     private static string GetFilePath(int year, int day) =>
         $"..\\..\\..\\Years\\{year}\\Inputs\\Day{day}Input.txt";
 
-    private static void GetInputFromSite(int year, int day, out bool success)
+    public static void GetInputFromSite(int year, int day, out bool success)
     {
+        IConfiguration config = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json")
+        .AddEnvironmentVariables()
+        .Build();
+
         success = false;
         string content;
         Uri baseAddress = new("https://adventofcode.com/");
+        string cookieValue = config["AoCSessionKey"];
         CookieContainer cookieContainer = new();
         using (HttpClientHandler handler = new() { CookieContainer = cookieContainer })
         using (HttpClient client = new(handler) { BaseAddress = baseAddress })

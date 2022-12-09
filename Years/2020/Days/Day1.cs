@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using AdventOfCode.Helpers;
-
-namespace AdventOfCode._2020;
+﻿namespace AdventOfCode._2020;
 
 public class Day1 : ISolution
 {

@@ -1,11 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode._2021;
+﻿namespace AdventOfCode._2021;
 public class Day10 : ISolution
 {
     private static List<string> Input =>

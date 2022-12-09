@@ -1,13 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace AdventOfCode._2019;
+﻿namespace AdventOfCode._2019;
 
 public class Day4 : ISolution
 {
@@ -121,6 +112,6 @@ public class Day4 : ISolution
         return numbersTwice.Count > 0;
     }
 
-    
+
 }
 

@@ -1,11 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode._2021;
+﻿namespace AdventOfCode._2021;
 
 public class Day4 : ISolution
 {
@@ -85,7 +78,7 @@ public class Day4 : ISolution
         List<BingoCard> cards = GetCards();
 
         string[] draws = bingoBalls.Split(',');
-        
+
         for (int i = 0; i < draws.Length; i++)
         {
             foreach (BingoCard card in cards)
@@ -148,7 +141,7 @@ public class BingoCard
     public List<int> UncheckedNumbers { get; set; }
 
     private int _wonAtDraw { get; set; }
-    public int WonAtDraw { get { return _wonAtDraw;  } }
+    public int WonAtDraw { get { return _wonAtDraw; } }
 
     private int _winningBall { get; set; }
     public int WinningBall { get { return _winningBall; } }

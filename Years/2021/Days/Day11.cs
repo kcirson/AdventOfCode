@@ -1,8 +1,3 @@
-using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace AdventOfCode._2021;
 public class Day11 : ISolution
 {
@@ -99,7 +94,7 @@ public class Day11 : ISolution
                 }
             }
 
-            if(litOctopi.Count == 100)
+            if (litOctopi.Count == 100)
                 break;
 
             flashCount += litOctopi.Count;

@@ -1,9 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace AdventOfCode._2021;
+﻿namespace AdventOfCode._2021;
 public class Day9 : ISolution
 {
     private static List<string> Input =>
@@ -77,7 +72,7 @@ public class Day9 : ISolution
 
         HashSet<(int x, int y)> basin = new();
 
-        while(toCheck.Count > 0)
+        while (toCheck.Count > 0)
         {
             var coord = toCheck.Dequeue();
             if (!basin.Contains(coord))
@@ -85,7 +80,7 @@ public class Day9 : ISolution
                 basin.Add(coord);
                 var value = map[coord.x][coord.y];
 
-                if(value == 9)
+                if (value == 9)
                     continue;
 
                 int left = coord.y - 1;

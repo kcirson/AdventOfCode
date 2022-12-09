@@ -1,11 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode._2021;
+﻿namespace AdventOfCode._2021;
 public class Day8 : ISolution
 {
     private static List<string> Input =>
@@ -90,7 +83,7 @@ public class Day8 : ISolution
 
             List<string> remainingSignals = new(signals);
 
-            if(remainingSignals.First(s => s.Length == 2) is string foundSignalOne)
+            if (remainingSignals.First(s => s.Length == 2) is string foundSignalOne)
             {
                 Number found = numbers.Find(n => n.Value == 1);
                 found.DecodedSegments = foundSignalOne.ToCharArray();
@@ -132,7 +125,7 @@ public class Day8 : ISolution
 
             Number four = numbers.Find(n => n.Value == 4);
 
-            if (remainingSignals.First(sig => eight.DecodedSegments.Except(sig.ToCharArray()).Count() == 1 && 
+            if (remainingSignals.First(sig => eight.DecodedSegments.Except(sig.ToCharArray()).Count() == 1 &&
                                         sig.ToCharArray().Intersect(four.DecodedSegments).Count() == four.SegmentCount) is string foundSignalNine)
             {
                 Number found = numbers.Find(n => n.Value == 9);
@@ -156,7 +149,7 @@ public class Day8 : ISolution
                 remainingSignals.Remove(foundSignalFive);
             }
 
-            if(remainingSignals.First(sig => eight.DecodedSegments.Except(sig.ToCharArray()).Count() == 2 &&
+            if (remainingSignals.First(sig => eight.DecodedSegments.Except(sig.ToCharArray()).Count() == 2 &&
                                     sig.ToCharArray().Intersect(one.DecodedSegments).Count() == 2) is string foundSignalThree)
             {
                 Number found = numbers.Find(n => n.Value == 3);
@@ -173,7 +166,7 @@ public class Day8 : ISolution
 
             int[] outputData = new int[outputs.Length];
 
-            for(int i =0; i< outputData.Length; i++)
+            for (int i = 0; i < outputData.Length; i++)
             {
                 char[] outputChars = outputs[i].ToCharArray();
 

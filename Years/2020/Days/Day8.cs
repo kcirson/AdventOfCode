@@ -1,12 +1,4 @@
-﻿using AdventOfCode.Helpers;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode._2020;
+﻿namespace AdventOfCode._2020;
 
 public class Day8 : ISolution
 {
